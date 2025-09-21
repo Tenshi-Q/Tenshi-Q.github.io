@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Input Sederhana</title>
+</head>
+<body>
+  <h2>Masukkan Data</h2>
+  <input type="text" id="userInput" placeholder="Ketik sesuatu..." />
+  <button onclick="simpanData()">Simpan</button>
+
+  <h3>Hasil Input:</h3>
+  <ul id="hasilList"></ul>
+
+  <script>
+    function simpanData() {
+      const input = document.getElementById("userInput").value;
+      if (input.trim() === "") return;
+      
+      // Simpan ke localStorage (penyimpanan lokal browser)
+      let data = JSON.parse(localStorage.getItem("data")) || [];
+      data.push(input);
+      localStorage.setItem("data", JSON.stringify(data));
+
+      // Tampilkan
+      tampilkanData();
+      document.getElementById("userInput").value = "";
+    }
+
+    function tampilkanData() {
+      const data = JSON.parse(localStorage.getItem("data")) || [];
+      const list = document.getElementById("hasilList");
+      list.innerHTML = "";
+      data.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    // Tampilkan saat pertama kali
+    tampilkanData();
+  </script>
+</body>
+</html>
